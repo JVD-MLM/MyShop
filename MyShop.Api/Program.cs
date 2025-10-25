@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Domain.Entities.Identity;
+using MyShop.Identity;
 using MyShop.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,15 @@ builder.Services.AddDbContext<MyShopDbContext>(options =>
 });
 
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    await SeedRoles.Initialize(roleManager, userManager);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

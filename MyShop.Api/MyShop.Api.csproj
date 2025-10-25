@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\MyShop.Application.csproj" />
+    <ProjectReference Include="..\Identity\MyShop.Identity.csproj" />
     <ProjectReference Include="..\Infrastructure\MyShop.Infrastructure.csproj" />
   </ItemGroup>
 
