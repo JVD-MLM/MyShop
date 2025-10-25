@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\MyShop.Application.csproj" />
-    <ProjectReference Include="..\Domain\MyShop.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\MyShop.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

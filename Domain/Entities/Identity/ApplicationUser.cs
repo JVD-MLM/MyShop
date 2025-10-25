@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace MyShop.Identity.Entities;
+namespace MyShop.Domain.Entities.Identity;
 
 public class ApplicationUser : IdentityUser<Guid>
 {
