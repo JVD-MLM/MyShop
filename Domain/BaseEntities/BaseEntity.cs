@@ -2,8 +2,8 @@
 
 public abstract class BaseEntity<T>
 {
-    public T Id { get; protected set; }
-    public bool IsDeleted { get; protected set; }
+    public T Id { get; set; }
+    public bool IsDeleted { get; set; }
     public Guid CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; }
     public Guid? ModifiedBy { get; set; }
