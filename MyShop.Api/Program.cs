@@ -61,13 +61,11 @@ builder.Services.AddCors(options =>
 
 #region Mapper // todo: fix error
 
-var mapperConfig = new MapperConfiguration(cfg =>
-{
-    cfg.AddProfile<MappingProfile>();
-});
+var loggerFactory = LoggerFactory.Create(cfg => cfg.AddConsole());
 
-IMapper mapper = mapperConfig.CreateMapper();
+var mapperConfig = new MapperConfiguration(cfg => { cfg.AddProfile<MappingProfile>(); }, loggerFactory);
 
+var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 

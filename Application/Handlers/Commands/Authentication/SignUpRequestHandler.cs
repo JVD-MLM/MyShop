@@ -29,7 +29,7 @@ public class SignUpRequestHandler : IRequestHandler<SignUpRequest, SignUpRequest
 
         if (!validationResult.IsValid) throw new ValidationException(validationResult.Errors);
 
-        var user = _mapper.Map<ApplicationUser>(request.SignUpRequestDto);
+        var user = _mapper.Map<ApplicationUser>(request.SignUpRequestDto); // todo: fix mapping
 
         var createUser = await _userManager.CreateAsync(user, request.SignUpRequestDto.Password);
 
