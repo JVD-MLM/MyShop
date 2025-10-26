@@ -11,7 +11,9 @@ public static class ApplicationServicesRegistration
     {
         services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()); });
 
+        //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         // automatic import all validators
-        //services.AddValidatorsFromAssemblyContaining<SignUpRequestDtoValidator>();
+        services.AddValidatorsFromAssemblyContaining<SignUpRequestDtoValidator>();
     }
 }

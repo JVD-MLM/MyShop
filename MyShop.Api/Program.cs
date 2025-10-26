@@ -1,8 +1,8 @@
-using FluentValidation;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Application;
-using MyShop.Application.Validators.Authentication;
+using MyShop.Application.Profiles;
 using MyShop.Domain.Entities.Identity;
 using MyShop.Identity;
 using MyShop.Infrastructure;
@@ -59,7 +59,19 @@ builder.Services.AddCors(options =>
 
 #endregion
 
-builder.Services.AddValidatorsFromAssemblyContaining<SignUpRequestDtoValidator>();
+#region Mapper // todo: fix error
+
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+
+
+builder.Services.AddSingleton(mapper);
+
+#endregion
 
 var app = builder.Build();
 

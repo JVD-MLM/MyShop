@@ -21,11 +21,10 @@ public class AuthenticationController : ControllerBase
     [Description("ثبت نام")]
     public async Task<IActionResult> SignUp([FromBody] SignUpRequestDto request, CancellationToken cancellationToken)
     {
+
         var result = await _mediator.Send(new SignUpRequest
         {
-            UserName = request.UserName,
-            Email = request.Email,
-            Password = request.Password
+            SignUpRequestDto = request
         });
 
         return Ok(result);
