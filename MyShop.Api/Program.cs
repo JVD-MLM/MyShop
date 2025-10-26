@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Application;
+using MyShop.Application.Validators.Authentication;
 using MyShop.Domain.Entities.Identity;
 using MyShop.Identity;
 using MyShop.Infrastructure;
@@ -56,6 +58,8 @@ builder.Services.AddCors(options =>
 });
 
 #endregion
+
+builder.Services.AddValidatorsFromAssemblyContaining<SignUpRequestDtoValidator>();
 
 var app = builder.Build();
 

@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MyShop.Application.DTOs.Authentication;
 using MyShop.Application.Requests.Commands.Authentication;
+using MyShop.Application.Responses.Authentication;
 
-namespace MyShop.Application.Handlers.Commands;
+namespace MyShop.Application.Handlers.Commands.Authentication;
 
 public class SignOutRequestHandler : IRequestHandler<SignOutRequest, SignOutRequestResponse>
 {

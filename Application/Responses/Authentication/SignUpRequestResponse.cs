@@ -1,4 +1,4 @@
-﻿namespace MyShop.Application.DTOs.Authentication;
+﻿namespace MyShop.Application.Responses.Authentication;
 
 public class SignUpRequestResponse
 {
