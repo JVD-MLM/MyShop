@@ -2,4 +2,5 @@
 
 public class SignUpRequestResponse
 {
+    public string Message { get; set; }
 }
