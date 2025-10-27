@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MyShop.Application.DTOs.Authentication;
 using MyShop.Application.Requests.Commands.Authentication;
 
 namespace MyShop.Api.Controllers.Authentication;
@@ -19,12 +18,13 @@ public class AuthenticationController : ControllerBase
 
     [HttpPost("sign-up")]
     [Description("ثبت نام")]
-    public async Task<IActionResult> SignUp([FromBody] SignUpRequestDto request, CancellationToken cancellationToken)
+    public async Task<IActionResult> SignUp([FromBody] SignUpRequest request, CancellationToken cancellationToken)
     {
-
         var result = await _mediator.Send(new SignUpRequest
         {
-            SignUpRequestDto = request
+            Email = request.Email,
+            UserName = request.UserName,
+            Password = request.Password
         });
 
         return Ok(result);

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\Authentication\" />
     <Folder Include="Handlers\Queries\" />
     <Folder Include="Requests\Queries\" />
   </ItemGroup>

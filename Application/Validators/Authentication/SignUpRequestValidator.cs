@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using MyShop.Application.DTOs.Authentication;
+using MyShop.Application.Requests.Commands.Authentication;
 
 namespace MyShop.Application.Validators.Authentication;
 
-public class SignUpRequestDtoValidator : AbstractValidator<SignUpRequestDto>
+public class SignUpRequestValidator : AbstractValidator<SignUpRequest>
 {
-    public SignUpRequestDtoValidator()
+    public SignUpRequestValidator()
     {
         RuleFor(x => x.UserName)
             .NotEmpty().WithMessage("نام کاربری الزامی است")

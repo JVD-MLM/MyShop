@@ -14,6 +14,6 @@ public static class ApplicationServicesRegistration
         //services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         // automatic import all validators
-        services.AddValidatorsFromAssemblyContaining<SignUpRequestDtoValidator>();
+        services.AddValidatorsFromAssemblyContaining<SignUpRequestValidator>();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MyShop.Application.DTOs.Authentication;
 using MyShop.Application.Requests.Commands.Authentication;
 using MyShop.Domain.Entities.Identity;
 
@@ -9,6 +8,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<SignInRequest, SignUpRequestDto>().ReverseMap(); // todo: fix mapping
+        CreateMap<ApplicationUser, SignUpRequest>().ReverseMap()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
     }
 }

@@ -59,7 +59,7 @@ builder.Services.AddCors(options =>
 
 #endregion
 
-#region Mapper // todo: fix error
+#region Mapper
 
 var loggerFactory = LoggerFactory.Create(cfg => cfg.AddConsole());
 

@@ -2,7 +2,6 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using MyShop.Application.DTOs.Authentication;
 using MyShop.Application.Requests.Commands.Authentication;
 using MyShop.Application.Responses.Authentication;
 using MyShop.Domain.Entities.Identity;
@@ -13,25 +12,25 @@ public class SignUpRequestHandler : IRequestHandler<SignUpRequest, SignUpRequest
 {
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IValidator<SignUpRequestDto> _validator;
+    private readonly IValidator<SignUpRequest> _validator;
 
-    public SignUpRequestHandler(UserManager<ApplicationUser> userManager, IValidator<SignUpRequestDto> validator,
-        IMapper mapper)
+    public SignUpRequestHandler(IMapper mapper, UserManager<ApplicationUser> userManager,
+        IValidator<SignUpRequest> validator)
     {
+        _mapper = mapper;
         _userManager = userManager;
         _validator = validator;
-        _mapper = mapper;
     }
 
     public async Task<SignUpRequestResponse> Handle(SignUpRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(request.SignUpRequestDto, cancellationToken);
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid) throw new ValidationException(validationResult.Errors);
 
-        var user = _mapper.Map<ApplicationUser>(request.SignUpRequestDto); // todo: fix mapping
+        var user = _mapper.Map<ApplicationUser>(request);
 
-        var createUser = await _userManager.CreateAsync(user, request.SignUpRequestDto.Password);
+        var createUser = await _userManager.CreateAsync(user, request.Password);
 
         if (createUser.Succeeded)
             return new SignUpRequestResponse
