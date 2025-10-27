@@ -29,4 +29,17 @@ public class AuthenticationController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("sign-in")]
+    [Description("ورود")]
+    public async Task<IActionResult> SignIn([FromBody] SignInRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SignInRequest
+        {
+            Email = request.Email,
+            Password = request.Password
+        });
+
+        return Ok(result);
+    }
 }

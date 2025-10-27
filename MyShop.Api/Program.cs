@@ -1,6 +1,8 @@
+using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MyShop.Application;
 using MyShop.Application.Profiles;
 using MyShop.Domain.Entities.Identity;
@@ -33,6 +35,29 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<MyShopDbContext>()
     .AddDefaultTokenProviders();
+
+#endregion
+
+#region JWT Authentication
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = "JwtBearer";
+        options.DefaultChallengeScheme = "JwtBearer";
+    })
+    .AddJwtBearer("JwtBearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 
 #endregion
 
@@ -73,7 +98,6 @@ builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
-
 #region RoleSeedData
 
 using (var scope = app.Services.CreateScope())
@@ -95,6 +119,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
 
 app.UseAuthorization();
 
