@@ -33,10 +33,16 @@ public class SignUpRequestHandler : IRequestHandler<SignUpRequest, SignUpRequest
         var createUser = await _userManager.CreateAsync(user, request.Password);
 
         if (createUser.Succeeded)
+        {
+            var roleExists = await _userManager.IsInRoleAsync(user, "User");
+
+            if (!roleExists) await _userManager.AddToRoleAsync(user, "User");
+
             return new SignUpRequestResponse
             {
                 Message = "حساب کاربری با موفقیت ساخته شد"
             };
+        }
 
         throw new Exception("حساب کاربری ساخته نشد"); // todo: to IdentityException
     }

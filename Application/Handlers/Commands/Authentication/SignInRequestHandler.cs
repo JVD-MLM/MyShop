@@ -28,10 +28,13 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest, SignInRequest
 
         if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
         {
+            var userRoles = await _userManager.GetRolesAsync(user);
+
             var authClaims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Name, user.UserName),
+                new(ClaimTypes.Role, userRoles.FirstOrDefault()),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -51,7 +54,7 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest, SignInRequest
                 Username = user.UserName,
                 FirstName = user.FirstName ?? "",
                 LastName = user.LastName ?? "",
-                RoleName = "", // todo
+                RoleName = userRoles.FirstOrDefault() ?? "",
                 ExpiredAt = $"{token.ValidTo}",
                 Token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(token)
             };
