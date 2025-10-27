@@ -30,6 +30,7 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest, SignInRequest
         {
             var authClaims = new List<Claim>
             {
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Name, user.UserName),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -52,7 +53,7 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest, SignInRequest
                 LastName = user.LastName ?? "",
                 RoleName = "", // todo
                 ExpiredAt = $"{token.ValidTo}",
-                Token = new JwtSecurityTokenHandler().WriteToken(token)
+                Token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(token)
             };
 
             return result;
