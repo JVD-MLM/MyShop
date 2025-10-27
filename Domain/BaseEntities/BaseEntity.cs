@@ -5,9 +5,9 @@ public abstract class BaseEntity<T>
     public T Id { get; set; }
     public bool IsDeleted { get; set; }
     public Guid CreatedBy { get; set; }
-    public DateTime CreatedAt { get; set; } // todo
+    public DateTime CreatedAt { get; set; }
     public Guid? ModifiedBy { get; set; }
-    public DateTime? ModifiedAt { get; set; } // todo
+    public DateTime? ModifiedAt { get; set; }
 
     public void SetDelete()
     {

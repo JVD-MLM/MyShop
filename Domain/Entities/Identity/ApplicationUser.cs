@@ -10,6 +10,7 @@ public class ApplicationUser : IdentityUser<Guid>
     public string? LastName { get; set; }
     public bool IsDeleted { get; protected set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime? ModifiedAt { get; set; }
     public bool IsBlocked { get; set; }
     public string? MobileActiveCode { get; set; }
     public bool IsActive { get; set; }
