@@ -20,26 +20,38 @@ public class AuthenticationController : ControllerBase
     [Description("ثبت نام")]
     public async Task<IActionResult> SignUp([FromBody] SignUpRequest request, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new SignUpRequest
+        var response = await _mediator.Send(new SignUpRequest
         {
             Email = request.Email,
             UserName = request.UserName,
             Password = request.Password
         });
 
-        return Ok(result);
+        return Ok(response);
     }
 
     [HttpPost("sign-in")]
     [Description("ورود")]
     public async Task<IActionResult> SignIn([FromBody] SignInRequest request, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new SignInRequest
+        var response = await _mediator.Send(new SignInRequest
         {
             Email = request.Email,
             Password = request.Password
         });
 
-        return Ok(result);
+        return Ok(response);
+    }
+
+    [HttpPost("sign-out")]
+    [Description("خروج")]
+    public async Task<IActionResult> SignOut([FromBody] SignOutRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new SignOutRequest
+        {
+            Token = request.Token
+        });
+
+        return Ok(response);
     }
 }

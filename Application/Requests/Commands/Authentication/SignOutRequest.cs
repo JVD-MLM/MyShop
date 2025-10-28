@@ -5,4 +5,5 @@ namespace MyShop.Application.Requests.Commands.Authentication;
 
 public class SignOutRequest : IRequest<SignOutRequestResponse>
 {
+    public string Token { get; set; } = string.Empty;
 }

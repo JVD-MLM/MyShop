@@ -2,4 +2,5 @@
 
 public class SignOutRequestResponse
 {
+    public string Message { get; set; }
 }

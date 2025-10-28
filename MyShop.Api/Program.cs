@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -59,6 +60,34 @@ builder.Services.AddAuthentication(options =>
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Headers["Authorization"].ToString();
+                context.Token = token;
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = async context =>
+            {
+                var db = context.HttpContext.RequestServices.GetRequiredService<MyShopDbContext>();
+
+                var jwtToken = context.SecurityToken as JwtSecurityToken;
+
+                if (jwtToken == null)
+                {
+                    context.Fail("توکن معتبر نیست.");
+                    return;
+                }
+
+                var rawToken = jwtToken.RawData;
+
+                var isRevoked = await db.RevokedTokens.AnyAsync(t => t.Token == rawToken);
+
+                if (isRevoked) context.Fail("این توکن لغو شده است.");
+            }
         };
     });
 

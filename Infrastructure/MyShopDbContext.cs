@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyShop.Domain.BaseEntities;
 using MyShop.Domain.Entities.Identity;
+using MyShop.Domain.Entities.Jwt;
 
 namespace MyShop.Infrastructure;
 
@@ -14,6 +15,7 @@ public class MyShopDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     #region Tables
 
     public DbSet<ApplicationUser> Users { get; set; }
+    public DbSet<RevokedToken> RevokedTokens { get; set; }
 
     #endregion
 
